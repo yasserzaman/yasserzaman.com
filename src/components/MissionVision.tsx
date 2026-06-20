@@ -52,6 +52,9 @@ export default function MissionVision({ thobePortraitUrl }: MissionVisionProps) 
 
     // Parallax scroll on the inner img tag
     if (imageRef.current) {
+      if (imageRef.current.complete) {
+        setImageLoaded(true);
+      }
       gsap.fromTo(
         imageRef.current,
         { yPercent: -15, scale: 1.05 },

@@ -133,17 +133,22 @@ export default function Hero({ onExploreClick, imageUrl }: HeroProps) {
                 
                 <div className="flex justify-between items-end">
                   <span className="font-mono text-[7px] sm:text-[8px] text-[#7E9F94]">[ SPECIMEN_A ]</span>
-                  <span className="font-mono text-[7px] sm:text-[8px] text-[#7E9F94]">[ RIYADH_BLAZER ]</span>
+                  <span className="font-mono text-[7px] sm:text-[8px] text-[#7E9F94]">[ STRATEGIC_VIEW ]</span>
                 </div>
               </div>
 
-               {/* Real user image. We zoom in with a tighter cinematic crop to hide background clutter and center on Yasser */}
+               {/* Real user image. Elegant cinematic display centered perfectly */}
               {!imageError ? (
                 <img
                   src={activeImageUrl}
-                  alt="Mohammed Yasser Zaman - Riyadh Blazer Portrait"
+                  alt="Mohammed Yasser Zaman - Executive Portrait"
                   referrerPolicy="no-referrer"
-                  className={`w-full h-full object-cover scale-[1.65] object-[center_30%] hover:scale-[1.75] transition-all duration-700 relative z-10 mix-blend-luminosity hover:mix-blend-normal cursor-crosshair ${
+                  ref={(el) => {
+                    if (el && el.complete) {
+                      setImageLoaded(true);
+                    }
+                  }}
+                  className={`w-full h-full object-cover scale-[1.12] hover:scale-[1.20] transition-all duration-700 relative z-10 mix-blend-normal [@media(hover:hover)]:mix-blend-luminosity [@media(hover:hover)]:hover:mix-blend-normal cursor-crosshair ${
                     imageLoaded ? "opacity-100" : "opacity-0"
                   }`}
                   onLoad={() => setImageLoaded(true)}

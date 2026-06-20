@@ -1,6 +1,6 @@
 {
-  "name": "Altaj Portfolio",
-  "description": "A high-end brutalist and hyper-minimalist editorial portfolio based on Altaj's personal brand assets and brand philosophy",
+  "name": "Yasser's Portfolio",
+  "description": "A high-end brutalist and hyper-minimalist editorial portfolio based on Yasser's personal brand assets and brand philosophy",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

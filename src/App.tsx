@@ -13,12 +13,13 @@ import Offerings from "./components/Offerings";
 import heroPortrait from "./assets/images/yasser_hero_portrait.jpg";
 import thobePortrait from "./assets/images/yasser_thobe_portrait.png";
 import journeyPortrait from "./assets/images/yasser_journey_portrait.jpg";
+import ceoPortrait from "./assets/images/the_ceoShot.jpg";
 
 const DEFAULT_LINKS = {
   hero: heroPortrait,
   thobe: thobePortrait,
-  bearded: heroPortrait,
-  journey: journeyPortrait
+  journey: journeyPortrait,
+  ceo: ceoPortrait
 };
 
 export default function App() {
@@ -96,8 +97,8 @@ export default function App() {
             {/* CORE TRUST - ASYMMETRICAL MISSION & VISION split layout with Altaj Thobe Portrait */}
             <MissionVision thobePortraitUrl={images.thobe} />
 
-            {/* INCEPTION & TRAJECTORY - PERSISTENT JOURNEY GRID WITH PARK PORTRAIT */}
-            <Journey journeyPortraitUrl={images.journey} />
+            {/* INCEPTION & TRAJECTORY - PERSISTENT JOURNEY GRID WITH PARK PORTRAIT & CEO SHOT */}
+            <Journey journeyPortraitUrl={images.journey} ceoPortraitUrl={images.ceo} />
 
             {/* CONTACT ENGINE - REACH OUT BENTO SETUP */}
             <Contact />

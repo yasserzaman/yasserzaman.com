@@ -1,14 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
-import { Compass, ShieldCheck, Cpu, Milestone, Sunrise, HelpCircle } from "lucide-react";
+import { Compass, ShieldCheck, Cpu, Milestone, Sunrise, HelpCircle, Play, Pause, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface JourneyProps {
   journeyPortraitUrl?: string;
+  ceoPortraitUrl?: string;
 }
 
-export default function Journey({ journeyPortraitUrl }: JourneyProps) {
-  const [imageError, setImageError] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
+export default function Journey({ journeyPortraitUrl, ceoPortraitUrl }: JourneyProps) {
+  const [journeyError, setJourneyError] = useState(false);
+  const [journeyLoaded, setJourneyLoaded] = useState(false);
+  const [ceoError, setCeoError] = useState(false);
+  const [ceoLoaded, setCeoLoaded] = useState(false);
+
+  // Tactical slideshow states
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  // Auto-rotation cycle
+  useEffect(() => {
+    if (!isPlaying) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev === 0 ? 1 : 0));
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [isPlaying]);
 
   const journeys = [
     {
@@ -49,6 +65,7 @@ export default function Journey({ journeyPortraitUrl }: JourneyProps) {
   ];
 
   const activeJourneyPortraitUrl = journeyPortraitUrl || "";
+  const activeCeoPortraitUrl = ceoPortraitUrl || "";
 
   return (
     <section
@@ -62,66 +79,107 @@ export default function Journey({ journeyPortraitUrl }: JourneyProps) {
       <div className="w-full max-w-6xl mx-auto space-y-8 md:space-y-12 z-10">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-[#142B23] pb-4">
-          <div>
-            <span className="font-mono text-xs text-[#10B981] block mb-1 uppercase tracking-[0.3em]">
-              THE INITIATION & EVOLUTION
-            </span>
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-light tracking-tighter text-[#ECFDF5]">
-              PERSISTENT_JOURNEY
-            </h2>
-          </div>
-          <div className="max-w-xs font-mono text-[10px] text-[#7E9F94] leading-relaxed">
-            [ RECORD_ID #2026_TRANSIT ] — EXPLORATION OF THE LONG PATH TRAVERSED AND SYSTEMS UNDERSTOOD.
-          </div>
+        <div className="border-b border-[#142B23] pb-4">
+          <span className="font-mono text-xs text-[#10B981] block mb-1 uppercase tracking-[0.3em]">
+            THE INITIATION & EVOLUTION
+          </span>
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-light tracking-tighter text-[#ECFDF5]">
+            PERSISTENT_JOURNEY
+          </h2>
         </div>
 
         {/* Spread Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
           
-          {/* Left Column: Image representing initial days & long path */}
+          {/* Left Column: Evolutionary Trajectory (Dynamic Cataloged Slideshow) */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="font-mono text-xs text-[#10B981] tracking-[0.3em] uppercase">
-              JOURNEY // ORIGINS
-            </div>
-
+            
+            {/* Unified Aspect 3/4 Frame */}
             <div className="aspect-[3/4] border border-[#142B23] bg-[#091410] p-4 relative group select-none">
-              <div className="absolute top-6 left-6 font-mono text-[9px] tracking-widest text-[#10B981] bg-[#050B08]/90 px-2 py-1 border border-[#142B23]/50 z-10">
-                PLATE_04 // INITIAL_CAREER_DAYS
+              <div className="absolute top-6 left-6 font-mono text-[9px] tracking-widest text-[#10B981] bg-[#050B08]/90 px-2 py-1 border border-[#142B23]/50 z-20">
+                {currentIndex === 0 ? "PLATE_04 // STRATEGIC_ALIGNMENT" : "PLATE_05 // INITIAL_FOUNDATIONS"}
               </div>
 
-              <div className="absolute bottom-6 right-6 font-mono text-[9px] tracking-widest text-[#ECFDF5] bg-[#050B08]/90 px-2 py-1 border border-[#142B23]/50 z-10">
-                LONDON_REG // PARK_BENCH
+              <div className="absolute bottom-6 right-6 font-mono text-[9px] tracking-widest text-[#ECFDF5] bg-[#050B08]/90 px-2 py-1 border border-[#142B23]/50 z-20">
+                {currentIndex === 0 ? "RIYADH_COURTYARD // THE_WALK" : "LONDON_REG // PARK_BENCH"}
               </div>
 
               <div className="w-full h-full bg-[#050B08] relative overflow-hidden border border-[#142B23]">
+                {/* Embedded dynamic text structure in background when images are loaded */}
                 <div className="absolute inset-0 flex flex-col justify-between p-6 opacity-30 z-0 text-center select-none">
-                  <span className="text-left font-mono text-[8px] text-[#7E9F94]">[ TRAJECTORY_STUDY ]</span>
+                  <span className="text-left font-mono text-[8px] text-[#7E9F94]">
+                    {currentIndex === 0 ? "[ STEWARDSHIP_STUDY ]" : "[ SYSTEM_FOUNDATIONS ]"}
+                  </span>
                   <div className="space-y-1">
-                    <p className="font-display text-2xl font-light text-white italic">Initial Days</p>
+                    <p className="font-display text-2xl font-light text-white italic">
+                      {currentIndex === 0 ? "Strategic Pacing" : "Initial Days"}
+                    </p>
                     <p className="font-mono text-[8px] tracking-widest text-[#10B981] uppercase">
-                      The Long Forested Path
+                      {currentIndex === 0 ? "The High-Angle Vision" : "The Long Forested Path"}
                     </p>
                   </div>
-                  <span className="text-right font-mono text-[8px] text-[#7E9F94]">[ EST_LONG_TERM ]</span>
+                  <span className="text-right font-mono text-[8px] text-[#7E9F94]">
+                    {currentIndex === 0 ? "[ EST_SOVEREIGN ]" : "[ EST_LONG_TERM ]"}
+                  </span>
                 </div>
 
-                {!imageError ? (
-                  <img
-                    src={activeJourneyPortraitUrl}
-                    alt="Yasser sitting on park bench - initial career days"
-                    referrerPolicy="no-referrer"
-                    className={`w-full h-full object-cover scale-100 hover:scale-[1.03] transition-all duration-1000 relative z-10 cursor-pointer ${
-                      imageLoaded ? "opacity-100" : "opacity-0"
-                    }`}
-                    onLoad={() => setImageLoaded(true)}
-                    onError={(e) => {
-                      console.info("Journey portrait load failed. Displaying custom pipeline backup.");
-                      setImageError(true);
-                    }}
-                  />
-                ) : (
-                  <div className="absolute inset-0 flex flex-col justify-center items-center p-6 bg-[#050B08] z-10 border border-[#142B23]/70">
+                {/* Main Plate: Strategic Walk (CEO Photo) */}
+                <motion.img
+                  src={activeCeoPortraitUrl}
+                  alt="Yasser walking deliberately captured from executive vantage point"
+                  referrerPolicy="no-referrer"
+                  ref={(el) => {
+                    if (el && el.complete) setCeoLoaded(true);
+                  }}
+                  animate={{
+                    opacity: currentIndex === 0 && !ceoError && ceoLoaded ? 1 : 0,
+                    scale: currentIndex === 0 ? [1.0, 1.08] : 1.00,
+                  }}
+                  transition={{
+                    opacity: { duration: 1.2, ease: "easeInOut" },
+                    scale: {
+                      duration: currentIndex === 0 ? 6.0 : 1.2,
+                      ease: "easeOut"
+                    }
+                  }}
+                  className="absolute inset-0 w-full h-full object-cover z-10 cursor-pointer"
+                  onLoad={() => setCeoLoaded(true)}
+                  onError={() => setCeoError(true)}
+                  style={{
+                    pointerEvents: currentIndex === 0 ? "auto" : "none"
+                  }}
+                />
+
+                {/* Main Plate: Origins London Bench (Journey Photo) */}
+                <motion.img
+                  src={activeJourneyPortraitUrl}
+                  alt="Yasser sitting on park bench - initial career days in London"
+                  referrerPolicy="no-referrer"
+                  ref={(el) => {
+                    if (el && el.complete) setJourneyLoaded(true);
+                  }}
+                  animate={{
+                    opacity: currentIndex === 1 && !journeyError && journeyLoaded ? 1 : 0,
+                    scale: currentIndex === 1 ? [1.0, 1.08] : 1.00,
+                  }}
+                  transition={{
+                    opacity: { duration: 1.2, ease: "easeInOut" },
+                    scale: {
+                      duration: currentIndex === 1 ? 6.0 : 1.2,
+                      ease: "easeOut"
+                    }
+                  }}
+                  className="absolute inset-0 w-full h-full object-cover z-10 cursor-pointer pointer-events-none"
+                  onLoad={() => setJourneyLoaded(true)}
+                  onError={() => setJourneyError(true)}
+                  style={{
+                    pointerEvents: currentIndex === 1 ? "auto" : "none"
+                  }}
+                />
+
+                {/* Fallbacks if error exists */}
+                {((currentIndex === 0 && ceoError) || (currentIndex === 1 && journeyError)) && (
+                  <div className="absolute inset-0 flex flex-col justify-center items-center p-6 bg-[#050B08] z-30 border border-[#142B23]/70">
                     <div className="w-12 h-12 rounded-full border border-[#10B981]/50 flex items-center justify-center text-[#10B981] mb-2 bg-[#091410]">
                       <HelpCircle className="w-5 h-5 text-[#10B981]" />
                     </div>
@@ -136,18 +194,70 @@ export default function Journey({ journeyPortraitUrl }: JourneyProps) {
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(5,11,8,0)_50%,rgba(5,11,8,0.75)_100%)] z-20 pointer-events-none mix-blend-multiply" />
               </div>
 
+              {/* Holographic Brutalist Corner Handles */}
               <div className="absolute -top-[1px] -left-[1px] w-4 h-4 border-t-2 border-l-2 border-[#10B981] pointer-events-none" />
               <div className="absolute -top-[1px] -right-[1px] w-4 h-4 border-t-2 border-r-2 border-[#10B981] pointer-events-none" />
               <div className="absolute -bottom-[1px] -left-[1px] w-4 h-4 border-b-2 border-l-2 border-[#10B981] pointer-events-none" />
               <div className="absolute -bottom-[1px] -right-[1px] w-4 h-4 border-b-2 border-r-2 border-[#10B981] pointer-events-none" />
             </div>
 
-            <div className="p-4 bg-[#091410] border border-[#142B23] space-y-2">
-              <span className="font-mono text-[9px] text-[#10B981] uppercase block">
-                [ STRUCTURAL REFLECTION ]
+            {/* Mini Player Dashboard */}
+            <div className="flex items-center justify-between font-mono text-[9px] text-[#7E9F94] bg-[#091410] border border-[#142B23] p-2.5">
+              <button
+                type="button"
+                onClick={() => setIsPlaying(!isPlaying)}
+                className="hover:text-white transition-colors flex items-center gap-1.5 focus:outline-none"
+                title={isPlaying ? "Pause autoplay rotation" : "Start autoplay rotation"}
+              >
+                {isPlaying ? (
+                  <span className="flex items-center gap-1.5 text-[#10B981]">
+                    <span className="w-1.5 h-1.5 bg-[#10B981] rounded-full animate-ping" />
+                    [ PLAYBACK_ACTIVE ]
+                  </span>
+                ) : (
+                  <span className="text-[#a1a1aa]">[ PLAYBACK_PAUSED ]</span>
+                )}
+              </button>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCurrentIndex((prev) => (prev === 0 ? 1 : 0));
+                    setIsPlaying(false);
+                  }}
+                  className="hover:text-white border border-[#142B23] px-1.5 py-0.5 bg-[#050B08] hover:bg-[#142B23]/30 transition-all select-none lowercase"
+                >
+                  prev
+                </button>
+                <span className="text-[#10B981] tracking-widest px-1 font-bold">
+                  {currentIndex + 1} / 2
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCurrentIndex((prev) => (prev === 0 ? 1 : 0));
+                    setIsPlaying(false);
+                  }}
+                  className="hover:text-white border border-[#142B23] px-1.5 py-0.5 bg-[#050B08] hover:bg-[#142B23]/30 transition-all select-none lowercase"
+                >
+                  next
+                </button>
+              </div>
+            </div>
+
+            {/* Context Narrative Card */}
+            <div className="p-4 bg-[#091410] border border-[#142B23] space-y-2 relative overflow-hidden min-h-[135px]">
+              <div className="absolute top-0 left-0 w-full h-[1px] bg-[linear-gradient(90deg,#10B981_0%,transparent_100%)] opacity-30 animate-pulse" />
+              
+              <span className="font-mono text-[9px] text-[#10B981] uppercase block tracking-wider">
+                {currentIndex === 0 ? "[ EXECUTIVE REFLECTION ]" : "[ ARCHIVAL ORIGINS ]"}
               </span>
-              <p className="font-sans text-xs text-[#7E9F94] leading-relaxed font-light">
-                This image captures Yasser in London during his early QA and design consulting tenure. From an environment where deep precision is paramount, it outlines the long path of digital creation and business building.
+              <p className="font-sans text-xs text-[#7E9F94] leading-relaxed font-light transition-all duration-300">
+                {currentIndex === 0 
+                  ? "A high-angle perspective study capturing Yasser walking through a modern geometric plaza. Taken from a superior vantage point, it acts as a visual metaphor: true leadership requires zooming out to map the entire system before directing the individual players."
+                  : "An archival study capturing Yasser on a park bench in London during his early quality assurance and systems design consulting tenure. From an environment where deep precision is paramount, it represents the patient starting point of meticulous detail tracking and robust, deep-value engineering."
+                }
               </p>
             </div>
           </div>
@@ -157,13 +267,13 @@ export default function Journey({ journeyPortraitUrl }: JourneyProps) {
             
             <div className="space-y-4 font-sans text-xs md:text-sm text-[#7E9F94] leading-relaxed font-light">
               <p>
-                I spent years as a <strong className="text-[#ECFDF5] font-normal">QA consultant in fintech</strong>, where an omitted edge case is not just a bug ticket—it represents real collateral and systems integrity. That period instilled a fierce architectural discipline: study the blueprints before trusting the structure, define the tests before compiling the modules, and hold absolute respect for the data.
+                I spent years establishing high-throughput assurance standards as a <strong className="text-[#ECFDF5] font-normal">Solutions Architect and Quality Consultant</strong> within precision ecosystems. In environments where microsecond lapses translate into millions, you develop a rare, strict discipline: map the structural constraints, audit database paths, design fail-safes, and hold absolute respect for operational integrity.
               </p>
               <p>
-                Over the years, simple questions about testing naturally grew into holistic concerns: <span className="text-[#10B981] italic">Why does this workflow exist? Can we engineer a cleaner model?</span> Quality thinking evolved into product strategy, and product strategy became a commitment to active building.
+                As systems grow, simple tactical questions naturally evolve into holistic concerns: <span className="text-[#10B981] italic">Why does this workflow exist? Can we engineer a cleaner model?</span> For me, quality engineering matured naturally into strategic stewardship, transforming technical oversight into high-level advisory value and modern sovereign ventures.
               </p>
               <p>
-                Today, I operate independently: consulting on software quality, releasing open-source automation utility code, and establishing ventures in travel and structured knowledge. This is not a pivot—it is a continuous path guided by a wider intent.
+                Today, I operate with deliberate pacing and uncompromised autonomy—partnering on selective high-level software architectures, releasing robust modular tools like <span className="text-[#ECFDF5] font-medium">dbCockpit</span> and <span className="text-[#ECFDF5] font-medium">SpecWriter</span>, and advising on venture-level travel systems. My path is defined by a singular rule: to elevate systems and spaces, engineering with precise intent.
               </p>
             </div>
 

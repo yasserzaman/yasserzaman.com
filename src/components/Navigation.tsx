@@ -53,9 +53,19 @@ export default function Navigation({ activeSection, scrollToSection }: Navigatio
               scrollToSection("hero");
               setIsMobileMenuOpen(false);
             }}
-            className="font-mono text-xs sm:text-sm tracking-[0.2em] font-semibold text-[#10B981] cursor-pointer hover:opacity-80 transition-opacity whitespace-nowrap"
+            className="flex items-center gap-2.5 group cursor-pointer focus:outline-none"
           >
-            [ YASSER ZAMAN ]
+            <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-sm border border-[#10B981]/50 bg-[#07130E] flex flex-col items-center justify-center relative overflow-hidden group-hover:border-[#10B981] group-hover:bg-[#10B981] group-hover:shadow-[0_0_12px_rgba(16,185,129,0.4)] transition-all duration-300">
+              <span className="font-mono text-[9px] sm:text-[10px] font-black text-[#10B981] group-hover:text-[#050B08] leading-none tracking-tight select-none z-10 transition-colors duration-300">
+                MYZ
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#10B981]/10 to-transparent opacity-80 group-hover:opacity-0 transition-opacity" />
+              <div className="absolute top-0 left-0 w-1 h-1 border-t border-l border-[#10B981]/40 group-hover:border-[#050D0A]" />
+              <div className="absolute bottom-0 right-0 w-1 h-1 border-b border-r border-[#10B981]/40 group-hover:border-[#050D0A]" />
+            </div>
+            <span className="font-mono text-xs sm:text-sm tracking-[0.2em] font-semibold text-[#10B981] group-hover:text-[#ECFDF5] transition-colors duration-300 whitespace-nowrap">
+              [ YASSER ZAMAN ]
+            </span>
           </button>
           <span className="hidden lg:inline-block font-mono text-[10px] text-[#10B981] bg-[#091410] px-2 py-0.5 border border-[#142B23] whitespace-nowrap">
             EST. 2026
