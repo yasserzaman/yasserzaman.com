@@ -119,7 +119,7 @@ export default function Contact() {
                 Base_Of_Operations
               </span>
               <span className="font-mono text-xs text-[#ECFDF5]">
-                Riyadh, KSA // Global_Active
+                Madina AL-Munawwara, KSA // Global_Active
               </span>
             </div>
 

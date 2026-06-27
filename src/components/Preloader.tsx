@@ -57,7 +57,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         
         {/* Giant high-end editorial numerical progression */}
         <div className="flex items-baseline justify-center gap-2 md:gap-4 mb-8">
-          <h1 className="font-display text-8xl md:text-[12rem] font-light text-[#ECFDF5] leading-none tracking-tighter">
+          <h1 className="font-display text-[clamp(5rem,22vmin,12rem)] font-light text-[#ECFDF5] leading-none tracking-tighter">
             {String(progress).padStart(3, "0")}
           </h1>
           <span className="font-mono text-2xl md:text-4xl text-[#10B981]">%</span>

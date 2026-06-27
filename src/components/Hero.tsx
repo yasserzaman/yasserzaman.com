@@ -15,7 +15,7 @@ export default function Hero({ onExploreClick, imageUrl }: HeroProps) {
   return (
     <section
       id="hero"
-      className="h-auto lg:h-screen lg:max-h-screen flex flex-col justify-between items-center relative pt-20 pb-8 lg:pt-24 lg:pb-4 px-6 md:px-16 lg:px-24 bg-[#050B08] overflow-hidden border-b border-[#142B23]"
+      className="lg:min-h-[100svh] flex flex-col justify-between items-center relative pt-20 pb-10 lg:pt-24 lg:pb-12 xl:pb-16 px-6 md:px-16 lg:px-24 bg-[#050B08] overflow-x-clip border-b border-[#142B23]"
     >
       {/* Background Grid Pattern Overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(#142B23_1px,transparent_1px)] [background-size:32px_32px] opacity-25 pointer-events-none" />

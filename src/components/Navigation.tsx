@@ -67,13 +67,13 @@ export default function Navigation({ activeSection, scrollToSection }: Navigatio
               [ YASSER ZAMAN ]
             </span>
           </button>
-          <span className="hidden lg:inline-block font-mono text-[10px] text-[#10B981] bg-[#091410] px-2 py-0.5 border border-[#142B23] whitespace-nowrap">
+          <span className="hidden xl:inline-block font-mono text-[10px] text-[#10B981] bg-[#091410] px-2 py-0.5 border border-[#142B23] whitespace-nowrap">
             EST. 2026
           </span>
         </div>
 
         {/* Desktop Anchor Navigation */}
-        <nav className="hidden md:flex items-center gap-4 lg:gap-8 font-mono text-xs tracking-widest text-[#7E9F94]">
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-8 font-mono text-xs tracking-widest text-[#7E9F94]">
           {navItems.map((item) => (
             <button
               key={item.id}
@@ -92,18 +92,18 @@ export default function Navigation({ activeSection, scrollToSection }: Navigatio
 
         {/* Time Indicator & Status */}
         <div className="flex items-center gap-3 sm:gap-4 font-mono text-xs text-[#7E9F94]">
-          <span className="hidden xl:inline text-[#7E9F94]">{currentTime}</span>
+          <span className="hidden 2xl:inline text-[#7E9F94]">{currentTime}</span>
           <div className="flex items-center gap-2 font-mono">
             <span className="w-2 h-2 bg-[#10B981] rounded-full animate-pulse" />
-            <span className="hidden lg:inline text-[#ECFDF5] tracking-widest uppercase text-[10px] whitespace-nowrap">
+            <span className="hidden xl:inline text-[#ECFDF5] tracking-widest uppercase text-[10px] whitespace-nowrap">
               ONLINE_PORTFOLIO
             </span>
           </div>
-          
+
           {/* Mobile hamburger toggle trigger */}
-          <button 
+          <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-1.5 text-[#10B981] border border-[#142B23] rounded bg-[#091410] hover:text-[#ECFDF5] transition-colors cursor-pointer"
+            className="lg:hidden p-1.5 text-[#10B981] border border-[#142B23] rounded bg-[#091410] hover:text-[#ECFDF5] transition-colors cursor-pointer"
             aria-label="Toggle navigation menu"
           >
             {isMobileMenuOpen ? (
@@ -123,7 +123,7 @@ export default function Navigation({ activeSection, scrollToSection }: Navigatio
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 top-16 bg-[#050B08]/95 border-b border-[#142B23]/90 backdrop-blur-md z-30 flex flex-col p-6 space-y-6 md:hidden max-h-[calc(100vh-4rem)] overflow-y-auto font-mono"
+            className="fixed inset-x-0 top-16 bg-[#050B08]/95 border-b border-[#142B23]/90 backdrop-blur-md z-30 flex flex-col p-6 space-y-6 lg:hidden max-h-[calc(100svh-4rem)] overflow-y-auto font-mono"
           >
             <nav className="flex flex-col gap-3 font-mono text-xs tracking-widest text-[#7E9F94]">
               {navItems.map((item) => (

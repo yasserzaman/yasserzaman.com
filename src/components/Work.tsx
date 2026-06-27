@@ -281,7 +281,8 @@ export default function Work() {
         </div>
 
         {/* ================= DESKTOP SUB-VIEWPORT PANEL (Viewport and space locked) ================= */}
-        <div className="hidden md:grid grid-cols-12 gap-6 h-[56vh] min-h-[500px] xl:min-h-[560px] items-stretch overflow-hidden">
+        {/* List/Spec tabs stay height-locked for the scrolling layout; Pillars sizes to its content so cards don't stretch and gap. */}
+        <div className={`hidden md:grid grid-cols-12 gap-6 items-stretch ${activeTab === "pillars" ? "" : "h-[56vh] min-h-[500px] xl:min-h-[560px] overflow-hidden"}`}>
           
           {/* Tab 1: Core Proof / Tab 2: Ventures & Ideas List Panel (4 columns) */}
           {(activeTab === "core" || activeTab === "ventures") && (
@@ -293,7 +294,7 @@ export default function Work() {
                     <button
                       key={idx}
                       onClick={() => handleProjectSelect(p)}
-                      className={`w-full text-left p-4 border transition-all duration-300 flex flex-col justify-between space-y-3 relative overflow-hidden group cursor-pointer ${
+                      className={`w-full text-left p-4 border transition-all duration-300 flex flex-col justify-between gap-3 shrink-0 relative overflow-hidden group cursor-pointer ${
                         isSelected 
                           ? "bg-[#091410] border-[#10B981] shadow-[0_0_15px_rgba(16,185,129,0.06)]" 
                           : "bg-[#050B08] border-[#142B23] hover:border-[#10B981]/40"
@@ -465,11 +466,11 @@ export default function Work() {
 
           {/* Tab 3: Ecosystem Pillars Panel */}
           {activeTab === "pillars" && (
-            <div className="col-span-12 grid grid-cols-1 md:grid-cols-4 gap-4 h-full">
+            <div className="col-span-12 grid grid-cols-1 md:grid-cols-4 gap-4 items-stretch">
               {PILLARS.map((pil, idx) => (
-                <div 
+                <div
                   key={idx}
-                  className="bg-[#091410] border border-[#142B23] hover:border-[#10B981]/30 p-6 flex flex-col justify-between space-y-6 transition-all duration-300 relative group"
+                  className="bg-[#091410] border border-[#142B23] hover:border-[#10B981]/30 p-6 flex flex-col gap-6 transition-all duration-300 relative group"
                 >
                   {/* Subtle hover accent corner highlights */}
                   <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#10B981]/0 group-hover:border-[#10B981]/60 transition-all duration-300" />
