@@ -4,6 +4,15 @@ Revision log for yasserzaman.com. Newest entries on top. Format loosely follows 
 
 ---
 
+## 2026-07-15 — Copy fix: Agentic Sales Report token-cost claim
+
+### Fixed
+- Corrected a factual mix-up in the "proves" copy for the Agentic Sales Report project. The 10,000–15,000 GPT-5.5 token figure is what it cost to **build** the agent (per Yasser), not the per-report runtime cost — per-report cost actually scales with input size. Rewrote to state that distinction plainly, tightened the wording, and added the Phase 2 roadmap (near-zero spend + a UI interaction layer, replacing the current Codex-CLI-only workflow).
+
+### Verified
+- `tsc --noEmit` clean, `vite build` succeeds.
+
+---
 ## 2026-07-15 — New flagship project + contact form wired up
 
 ### Added

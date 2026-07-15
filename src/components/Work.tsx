@@ -32,7 +32,7 @@ const PROJECTS: Project[] = [
     link: { label: "View on GitHub", url: "https://github.com/yassarminhaj/agentic-sales-report" },
     detail: {
       why: "AL-Taj's monthly sales reporting meant manually reconciling supplier invoices, customer-raised invoices, and payment records by hand. This agent ingests the raw PDFs from three folders, matches them, and surfaces discrepancies for a quick human sign-off before finalizing the report — replacing a manual fintech-QA-grade reconciliation task with a lightweight autonomous workflow.",
-      proves: "Runs on just 3 markdown routing files — no fine-tuning, no framework — for roughly 10,000–15,000 GPT-5.5 tokens per report. Open-sourced for reuse. Live proof that fintech-grade rigor and agentic AI engineering plug directly into a real operating business: this same agent runs AL-Taj's own books.",
+      proves: "Built for 10,000–15,000 GPT-5.5 tokens total, on just 3 markdown routing files — no fine-tuning, no framework. Per-report cost scales with input size; Phase 2 targets near-zero spend and a UI layer for non-technical use. Open-sourced, and already running AL-Taj's own books.",
       stack: "Codex-orchestrated agent · markdown-defined routing (AGENTS.md) · PDF invoice ingestion · auto-generated HTML report output"
     }
   },
