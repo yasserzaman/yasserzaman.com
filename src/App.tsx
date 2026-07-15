@@ -11,7 +11,7 @@ import Offerings from "./components/Offerings";
 
 // Import compiled high-end editorial local assets
 import heroPortrait from "./assets/images/yasser_hero_portrait.jpg";
-import thobePortrait from "./assets/images/yasser_thobe_portrait.png";
+import thobePortrait from "./assets/images/yasser_thobe_portrait.jpg";
 import journeyPortrait from "./assets/images/yasser_journey_portrait.jpg";
 import ceoPortrait from "./assets/images/the_ceoShot.jpg";
 
