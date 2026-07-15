@@ -14,3 +14,11 @@ declare module "*.svg" {
   const src: string;
   export default src;
 }
+
+interface ImportMetaEnv {
+  readonly VITE_FORMSPREE_FORM_ID?: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}

@@ -1,6 +1,17 @@
 import React, { useState } from "react";
 import { Mail, Check, AlertCircle } from "lucide-react";
 
+const TOPIC_LABELS: Record<string, string> = {
+  COLLECTIVE_DEV: "Collective Development & Tech",
+  MENTOR_STRAT: "Evergreen Mentorship & Talent",
+  TRAVEL_NOM: "Spatial Journeys & Travel Archive",
+  PHILOS_ALIGN: "Philosophical System Designs",
+};
+
+// Formspree form endpoint ID (formspree.io/f/<id>). Set VITE_FORMSPREE_FORM_ID
+// in your environment / Vercel project settings. See .env.example.
+const FORMSPREE_FORM_ID = import.meta.env.VITE_FORMSPREE_FORM_ID as string | undefined;
+
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
@@ -10,33 +21,48 @@ export default function Contact() {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error" | "config">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) {
       setSubmitStatus("error");
       return;
     }
 
+    if (!FORMSPREE_FORM_ID) {
+      // No endpoint configured yet — surface a clear signal instead of
+      // silently pretending the message was sent.
+      setSubmitStatus("config");
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus("idle");
 
-    // Simulate elite secure pipeline transition
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_FORM_ID}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          topic: TOPIC_LABELS[formData.topic] ?? formData.topic,
+          message: formData.message,
+          _subject: `Portfolio inquiry — ${TOPIC_LABELS[formData.topic] ?? formData.topic}`,
+        }),
+      });
+
+      if (!res.ok) throw new Error(`Formspree responded with ${res.status}`);
+
       setSubmitStatus("success");
-      // Add secure storage log
-      const log = {
-        ...formData,
-        timestamp: new Date().toISOString(),
-      };
-      const existingLogs = JSON.parse(localStorage.getItem("yasser_zaman_inbound_communications") || "[]");
-      localStorage.setItem("yasser_zaman_inbound_communications", JSON.stringify([...existingLogs, log]));
-      
-      // Clean form on success
       setFormData({ name: "", email: "", topic: "COLLECTIVE_DEV", message: "" });
-    }, 1500);
+    } catch (err) {
+      console.error("Contact form submission failed:", err);
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -156,6 +182,13 @@ export default function Contact() {
                 <div className="p-4 bg-red-950/35 border border-red-700/60 text-red-300 font-mono text-xs flex items-center gap-3">
                   <AlertCircle className="w-4 h-4 flex-shrink-0" />
                   <span>FAILED VERIFICATION. SECURE REGISTRATION DEMANDS ALL FIELDS.</span>
+                </div>
+              )}
+
+              {submitStatus === "config" && (
+                <div className="p-4 bg-amber-950/35 border border-amber-700/60 text-amber-300 font-mono text-xs flex items-center gap-3">
+                  <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                  <span>PIPELINE NOT CONFIGURED YET. EMAIL YASSAR.MINHAJ@GMAIL.COM OR USE WHATSAPP DIRECTLY.</span>
                 </div>
               )}
 

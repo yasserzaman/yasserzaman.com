@@ -187,7 +187,7 @@ export default function Hero({ onExploreClick, imageUrl }: HeroProps) {
       <div className="w-full max-w-6xl mt-auto py-5 md:py-6 border-t border-[#142B23]/50 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 z-10 font-mono text-[9px] sm:text-[10px] uppercase text-[#7E9F94] tracking-wider">
         <div>
           <span className="block text-[#10B981] mb-1 font-bold">Proof_Projects</span>
-          <span>Defect Tracker // dbCockpit</span>
+          <span>Agentic Sales Report // Defect Tracker</span>
         </div>
         <div>
           <span className="block text-[#10B981] mb-1 font-bold">Ventures</span>

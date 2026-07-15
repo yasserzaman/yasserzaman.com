@@ -4,6 +4,28 @@ Revision log for yasserzaman.com. Newest entries on top. Format loosely follows 
 
 ---
 
+## 2026-07-15 — New flagship project + contact form wired up
+
+### Added
+- **New project: "Agentic Sales Report"** — added to `Work.tsx` as the lead entry in the core group (ahead of Defect Tracker), researched from github.com/yassarminhaj/agentic-sales-report and the LinkedIn launch post. Codex-orchestrated agent that reconciles AL-Taj's invoices into a finished sales report; ~10-15K tokens/report, 3 markdown routing files, open-sourced.
+  - All `REF_` codes across every project renumbered sequentially (REF_01 -> REF_10) to keep the blueprint IDs consistent.
+  - Added to the Work_Better pillar's bullet list.
+  - Hero.tsx footer strip ("Proof_Projects") now reads "Agentic Sales Report // Defect Tracker".
+- **Contact form now actually sends.** Replaced the fake `setTimeout` + `localStorage` submit in `Contact.tsx` with a real POST to Formspree (`VITE_FORMSPREE_FORM_ID` env var — see `.env.example`). Added a distinct "not configured yet" state so the form fails visibly instead of pretending to succeed if the env var is missing.
+- `ImportMetaEnv` typing for `VITE_FORMSPREE_FORM_ID` in `vite-env.d.ts`.
+
+### Removed
+- Stale `MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API` flag from `metadata.json` and the old `GEMINI_API_KEY`/`APP_URL` vars from `.env.example` — leftovers from the AI Studio Gemini scaffold, consistent with the dead `@google/genai` dependency removed earlier today.
+
+### Verified
+- `tsc --noEmit` clean, `vite build` succeeds.
+
+### Action required from Yasser
+- **Contact form is wired but not live yet.** Create a free form at formspree.io, then set `VITE_FORMSPREE_FORM_ID` as an environment variable in Vercel (Project Settings -> Environment Variables) and redeploy. Until then, submitting the form shows an honest "not configured" message instead of a fake success.
+- Changes in this session are committed locally but **not pushed** — review `git log` / `git diff` before pushing to `main`, since Vercel will likely auto-deploy on push.
+
+---
+
 ## 2026-07-15 — Baseline audit + performance/hygiene pass
 
 ### Context
