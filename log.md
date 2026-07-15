@@ -34,5 +34,6 @@ First full review of the codebase by Claude (principal-dev pass). Site is a Reac
 ### Known issues / not yet fixed
 - **Contact form doesn't send anywhere.** `Contact.tsx` simulates a submit with `setTimeout` and writes to `localStorage` only — no message actually reaches Yasser. Needs a real submission path (decision pending — see action plan).
 - JS bundle is 527KB (172KB gzipped) — Vite's build warns on chunk size. Not urgent; would need route-level/library code-splitting (e.g. lazy-loading GSAP/motion) to address. Parked for later.
+- **New flagship project queued**: adding "Agentic Sales Report" (github.com/yassarminhaj/agentic-sales-report) to Work.tsx as the lead project, ahead of Defect Tracker. Plan drafted and sent for approval; not yet implemented.
 
 ---
