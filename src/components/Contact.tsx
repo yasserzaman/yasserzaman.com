@@ -8,10 +8,6 @@ const TOPIC_LABELS: Record<string, string> = {
   PHILOS_ALIGN: "Philosophical System Designs",
 };
 
-// Formspree form endpoint ID (formspree.io/f/<id>). Set VITE_FORMSPREE_FORM_ID
-// in your environment / Vercel project settings. See .env.example.
-const FORMSPREE_FORM_ID = import.meta.env.VITE_FORMSPREE_FORM_ID as string | undefined;
-
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
@@ -30,30 +26,28 @@ export default function Contact() {
       return;
     }
 
-    if (!FORMSPREE_FORM_ID) {
-      // No endpoint configured yet — surface a clear signal instead of
-      // silently pretending the message was sent.
-      setSubmitStatus("config");
-      return;
-    }
-
     setIsSubmitting(true);
     setSubmitStatus("idle");
 
     try {
-      const res = await fetch(`https://formspree.io/f/${FORMSPREE_FORM_ID}`, {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
-          topic: TOPIC_LABELS[formData.topic] ?? formData.topic,
+          topic: formData.topic,
           message: formData.message,
-          _subject: `Portfolio inquiry — ${TOPIC_LABELS[formData.topic] ?? formData.topic}`,
+          company: "",
         }),
       });
 
-      if (!res.ok) throw new Error(`Formspree responded with ${res.status}`);
+      if (res.status === 503) {
+        setSubmitStatus("config");
+        throw new Error("pipeline not configured");
+      }
+
+      if (!res.ok) throw new Error(`Contact API responded with ${res.status}`);
 
       setSubmitStatus("success");
       setFormData({ name: "", email: "", topic: "COLLECTIVE_DEV", message: "" });
