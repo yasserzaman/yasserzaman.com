@@ -1,12 +1,87 @@
-import React, { useState } from "react";
-import { Check, AlertCircle } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { Check, AlertCircle, ChevronDown } from "lucide-react";
 
 const TOPIC_LABELS: Record<string, string> = {
   SOFTWARE_QA: "Software & QA Consulting",
   TRAVEL_ALTAJ: "Travel & AL-Taj Tours",
-  MENTORSHIP: "Mentorship & Career Advice",
+  IMPROVE_LABS: "AI Agent & Automation",
   GENERAL: "General Inquiry",
 };
+const TOPIC_OPTIONS = Object.entries(TOPIC_LABELS);
+
+// Custom-styled dropdown. Native <select> popups are drawn by the OS/browser
+// and ignore page CSS almost everywhere (Chrome included) - the highlighted
+// option always shows the system default blue. A plain button + listbox
+// gives full control over every state instead, so it actually matches the
+// site's dark/emerald palette.
+function TopicSelect({ value, onChange }: { value: string; onChange: (value: string) => void }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handlePointerDown = (e: MouseEvent) => {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("keydown", handleKey);
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("keydown", handleKey);
+    };
+  }, [isOpen]);
+
+  return (
+    <div ref={rootRef} className="relative">
+      <button
+        type="button"
+        id="topic"
+        onClick={() => setIsOpen((v) => !v)}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        className="w-full flex items-center justify-between gap-2 bg-[#050B08] border border-[#142B23] px-4 py-3 text-[#ECFDF5] font-mono text-xs uppercase tracking-wider focus:outline-none focus:border-[#10B981] transition-colors cursor-pointer"
+      >
+        <span>{TOPIC_LABELS[value] ?? value}</span>
+        <ChevronDown
+          className={`w-4 h-4 text-[#10B981] shrink-0 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {isOpen && (
+        <ul
+          role="listbox"
+          tabIndex={-1}
+          className="absolute z-20 top-full left-0 right-0 mt-1 bg-[#050B08] border border-[#10B981]/40 shadow-[0_8px_24px_rgba(0,0,0,0.5)] max-h-60 overflow-auto"
+        >
+          {TOPIC_OPTIONS.map(([key, label]) => {
+            const selected = key === value;
+            return (
+              <li key={key} role="option" aria-selected={selected}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onChange(key);
+                    setIsOpen(false);
+                  }}
+                  className={`w-full text-left px-4 py-2.5 font-mono text-xs uppercase tracking-wider transition-colors cursor-pointer ${
+                    selected ? "bg-[#10B981]/10 text-[#10B981]" : "text-[#ECFDF5] hover:bg-[#10B981]/10 hover:text-[#10B981]"
+                  }`}
+                >
+                  {label}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -211,17 +286,10 @@ export default function Contact() {
                 <label htmlFor="topic" className="block font-mono text-[10px] text-[#ECFDF5] uppercase tracking-wider">
                   TOPIC
                 </label>
-                <select
-                  id="topic"
+                <TopicSelect
                   value={formData.topic}
-                  onChange={(e) => setFormData({ ...formData, topic: e.target.value })}
-                  className="w-full bg-[#050B08] border border-[#142B23] px-4 py-3 text-[#ECFDF5] font-mono text-xs focus:outline-none focus:border-[#10B981] transition-colors cursor-pointer appearance-none"
-                >
-                  <option value="SOFTWARE_QA">SOFTWARE & QA CONSULTING</option>
-                  <option value="TRAVEL_ALTAJ">TRAVEL & AL-TAJ TOURS</option>
-                  <option value="MENTORSHIP">MENTORSHIP & CAREER ADVICE</option>
-                  <option value="GENERAL">GENERAL INQUIRY</option>
-                </select>
+                  onChange={(topic) => setFormData({ ...formData, topic })}
+                />
               </div>
 
               {/* Message Block */}

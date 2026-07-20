@@ -4,6 +4,18 @@ Revision log for yasserzaman.com. Newest entries on top. Format loosely follows 
 
 ---
 
+## 2026-07-20 — Custom contact-form dropdown (no more native blue highlight)
+
+### Fixed
+- The Topic field's highlighted/hovered option showed the browser's native system blue, clashing with the site's dark/emerald palette. This isn't a CSS oversight — native `<select>` popups are rendered by the OS/browser (Chrome especially) and their option-highlight color largely can't be overridden with page CSS. Replaced the native `<select>` with a small custom dropdown (`TopicSelect`, defined locally in `Contact.tsx`): a styled trigger button + an absolutely-positioned options list, both fully on-brand (emerald hover/selected state, dark background, monospace type, a chevron that rotates on open).
+- Drove the option list from the existing `TOPIC_LABELS` map (previously defined but unused after an in-flight edit elsewhere had started hardcoding the `<option>` tags directly) instead of duplicating the four options as literal JSX — single source of truth again.
+- Closes on outside click or Escape; basic listbox ARIA roles (`role="listbox"`/`"option"`, `aria-expanded`, `aria-selected`) for screen readers. Not a full arrow-key combobox — click/tap and Escape cover the realistic use case for a 4-option contact-form field.
+
+### Verified
+- `tsc --noEmit` clean.
+- Booted the local Vite dev server and fetched the live-transformed `Contact.tsx` module directly (HTTP 200, `TopicSelect` present, no transform errors) — full `vite build` still isn't reliably completing in this sandbox (see prior entries), so this was the practical substitute to confirm it actually compiles and runs.
+
+---
 ## 2026-07-20 — Clearer contact-form topic options
 
 ### Changed
