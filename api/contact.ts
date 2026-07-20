@@ -75,6 +75,9 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   const email = typeof body.email === "string" ? clean(body.email, 200) : "";
   const topicKey = typeof body.topic === "string" ? clean(body.topic, 50) : "";
   const message = typeof body.message === "string" ? body.message.trim().slice(0, 5000) : "";
+  // "chatbot" leads are relayed by the assistant, not typed into the form by the
+  // visitor — so we skip the auto-confirmation to avoid emailing a parsed address.
+  const source = typeof body.source === "string" ? clean(body.source, 30) : "";
 
   if (!name || !message || !EMAIL_RE.test(email)) {
     return res.status(400).json({ error: "invalid_input" });
@@ -121,28 +124,32 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   // 2) Confirmation to the visitor. Deliberately generic — it does not echo
   //    the message body back, so the form can't be abused to send arbitrary
   //    content to third-party addresses. Failure here is non-fatal.
-  try {
-    await transporter.sendMail({
-      from,
-      to: email,
-      replyTo: EMAIL_TO,
-      subject: "Your message has been received — Yasser Zaman",
-      text: [
-        `Salaam ${name},`,
-        ``,
-        `Thank you for reaching out through yasserzaman.com. Your message on`,
-        `"${topic}" has been logged and I read everything personally.`,
-        ``,
-        `Expect a response within 24–48 hours. If it's urgent, WhatsApp is the`,
-        `fastest channel: https://wa.me/+966538443736`,
-        ``,
-        `— Yasser Zaman`,
-        `Co-founder, Al-Taj Tours & Travels`,
-        `https://yasserzaman.com`,
-      ].join("\n"),
-    });
-  } catch (err) {
-    console.error("contact: confirmation send failed (non-fatal):", err);
+  //    Skipped for chatbot-relayed leads (the address was parsed from chat, not
+  //    entered by the visitor, so we shouldn't auto-email it).
+  if (source !== "chatbot") {
+    try {
+      await transporter.sendMail({
+        from,
+        to: email,
+        replyTo: EMAIL_TO,
+        subject: "Your message has been received — Yasser Zaman",
+        text: [
+          `Salaam ${name},`,
+          ``,
+          `Thank you for reaching out through yasserzaman.com. Your message on`,
+          `"${topic}" has been logged and I read everything personally.`,
+          ``,
+          `Expect a response within 24–48 hours. If it's urgent, WhatsApp is the`,
+          `fastest channel: https://wa.me/+966538443736`,
+          ``,
+          `— Yasser Zaman`,
+          `Co-founder, Al-Taj Tours & Travels`,
+          `https://yasserzaman.com`,
+        ].join("\n"),
+      });
+    } catch (err) {
+      console.error("contact: confirmation send failed (non-fatal):", err);
+    }
   }
 
   return res.status(200).json({ ok: true });

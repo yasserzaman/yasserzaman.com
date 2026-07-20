@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, MessageSquare } from "lucide-react";
+import { OPEN_CHAT_EVENT } from "./ChatWidget";
 
 interface NavigationProps {
   activeSection: string;
@@ -93,12 +94,18 @@ export default function Navigation({ activeSection, scrollToSection }: Navigatio
         {/* Time Indicator & Status */}
         <div className="flex items-center gap-3 sm:gap-4 font-mono text-xs text-[#7E9F94]">
           <span className="hidden 2xl:inline text-[#7E9F94]">{currentTime}</span>
-          <div className="flex items-center gap-2 font-mono">
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent(OPEN_CHAT_EVENT))}
+            aria-label="Chat with Yasser's assistant"
+            title="Ask Yasser's assistant"
+            className="flex items-center gap-2 font-mono px-2 sm:px-2.5 py-1.5 border border-[#142B23] bg-[#091410] hover:border-[#10B981] hover:bg-[#0A1D16] transition-colors cursor-pointer group"
+          >
             <span className="w-2 h-2 bg-[#10B981] rounded-full animate-pulse" />
-            <span className="hidden xl:inline text-[#ECFDF5] tracking-widest uppercase text-[10px] whitespace-nowrap">
-              ONLINE_PORTFOLIO
+            <MessageSquare className="w-3.5 h-3.5 text-[#10B981]" />
+            <span className="hidden xl:inline text-[#ECFDF5] group-hover:text-[#10B981] tracking-widest uppercase text-[10px] whitespace-nowrap transition-colors">
+              Ask_Assistant
             </span>
-          </div>
+          </button>
 
           {/* Mobile hamburger toggle trigger */}
           <button

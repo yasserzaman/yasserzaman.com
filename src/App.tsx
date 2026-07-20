@@ -8,6 +8,7 @@ import Work from "./components/Work";
 import Journey from "./components/Journey";
 import Contact from "./components/Contact";
 import Offerings from "./components/Offerings";
+import ChatWidget from "./components/ChatWidget";
 
 // Import compiled high-end editorial local assets
 import heroPortrait from "./assets/images/yasser_hero_portrait.jpg";
@@ -104,6 +105,9 @@ export default function App() {
             <Contact />
 
           </main>
+
+          {/* Floating AI assistant / gatekeeper */}
+          <ChatWidget />
 
         </div>
       )}

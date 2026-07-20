@@ -6,3 +6,9 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Private — do not commit to public repo
+CLAUDE.md
+classic_resumes_coverletter/
+api/.fuse_hidden*
+launch-preview.cmd
