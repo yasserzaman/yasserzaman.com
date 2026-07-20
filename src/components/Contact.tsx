@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import { Check, AlertCircle } from "lucide-react";
 
 const TOPIC_LABELS: Record<string, string> = {
-  COLLECTIVE_DEV: "Collective Development & Tech",
-  MENTOR_STRAT: "Evergreen Mentorship & Talent",
-  TRAVEL_NOM: "Spatial Journeys & Travel Archive",
-  PHILOS_ALIGN: "Philosophical System Designs",
+  SOFTWARE_QA: "Software & QA Consulting",
+  TRAVEL_ALTAJ: "Travel & AL-Taj Tours",
+  MENTORSHIP: "Mentorship & Career Advice",
+  GENERAL: "General Inquiry",
 };
 
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    topic: "COLLECTIVE_DEV",
+    topic: "SOFTWARE_QA",
     message: "",
   });
 
@@ -50,7 +50,7 @@ export default function Contact() {
       if (!res.ok) throw new Error(`Contact API responded with ${res.status}`);
 
       setSubmitStatus("success");
-      setFormData({ name: "", email: "", topic: "COLLECTIVE_DEV", message: "" });
+      setFormData({ name: "", email: "", topic: "SOFTWARE_QA", message: "" });
     } catch (err) {
       console.error("Contact form submission failed:", err);
       setSubmitStatus("error");
@@ -209,7 +209,7 @@ export default function Contact() {
               {/* Topic Segment Dropdown */}
               <div className="space-y-2">
                 <label htmlFor="topic" className="block font-mono text-[10px] text-[#ECFDF5] uppercase tracking-wider">
-                  INITIATIVE_TOPIC
+                  TOPIC
                 </label>
                 <select
                   id="topic"
@@ -217,10 +217,10 @@ export default function Contact() {
                   onChange={(e) => setFormData({ ...formData, topic: e.target.value })}
                   className="w-full bg-[#050B08] border border-[#142B23] px-4 py-3 text-[#ECFDF5] font-mono text-xs focus:outline-none focus:border-[#10B981] transition-colors cursor-pointer appearance-none"
                 >
-                  <option value="COLLECTIVE_DEV">COLLECTIVE DEVELOPMENT & TECH</option>
-                  <option value="MENTOR_STRAT">EVERGREEN MENTORSHIP & TALENT</option>
-                  <option value="TRAVEL_NOM">SPATIAL JOURNEYS & TRAVEL ARCHIVE</option>
-                  <option value="PHILOS_ALIGN">PHILOSOPHICAL SYSTEM DESIGNS</option>
+                  <option value="SOFTWARE_QA">SOFTWARE & QA CONSULTING</option>
+                  <option value="TRAVEL_ALTAJ">TRAVEL & AL-TAJ TOURS</option>
+                  <option value="MENTORSHIP">MENTORSHIP & CAREER ADVICE</option>
+                  <option value="GENERAL">GENERAL INQUIRY</option>
                 </select>
               </div>
 

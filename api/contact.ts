@@ -31,10 +31,10 @@ interface ApiResponse {
 export const maxDuration = 15;
 
 const TOPIC_LABELS: Record<string, string> = {
-  COLLECTIVE_DEV: "Collective Development & Tech",
-  MENTOR_STRAT: "Evergreen Mentorship & Talent",
-  TRAVEL_NOM: "Spatial Journeys & Travel Archive",
-  PHILOS_ALIGN: "Philosophical System Designs",
+  SOFTWARE_QA: "Software & QA Consulting",
+  TRAVEL_ALTAJ: "Travel & AL-Taj Tours",
+  MENTORSHIP: "Mentorship & Career Advice",
+  GENERAL: "General Inquiry",
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
