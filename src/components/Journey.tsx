@@ -246,20 +246,6 @@ export default function Journey({ journeyPortraitUrl, ceoPortraitUrl }: JourneyP
               </div>
             </div>
 
-            {/* Context Narrative Card */}
-            <div className="p-4 bg-[#091410] border border-[#142B23] space-y-2 relative overflow-hidden min-h-[135px]">
-              <div className="absolute top-0 left-0 w-full h-[1px] bg-[linear-gradient(90deg,#10B981_0%,transparent_100%)] opacity-30 animate-pulse" />
-              
-              <span className="font-mono text-[9px] text-[#10B981] uppercase block tracking-wider">
-                {currentIndex === 0 ? "[ EXECUTIVE REFLECTION ]" : "[ ARCHIVAL ORIGINS ]"}
-              </span>
-              <p className="font-sans text-xs text-[#7E9F94] leading-relaxed font-light transition-all duration-300">
-                {currentIndex === 0 
-                  ? "A high-angle perspective study capturing Yasser walking through a modern geometric plaza. Taken from a superior vantage point, it acts as a visual metaphor: true leadership requires zooming out to map the entire system before directing the individual players."
-                  : "An archival study capturing Yasser on a park bench in London during his early quality assurance and systems design consulting tenure. From an environment where deep precision is paramount, it represents the patient starting point of meticulous detail tracking and robust, deep-value engineering."
-                }
-              </p>
-            </div>
           </div>
 
           {/* Right Column: Narrative + Detailed Log Timeline */}

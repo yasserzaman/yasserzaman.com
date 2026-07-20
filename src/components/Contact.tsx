@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Mail, Check, AlertCircle } from "lucide-react";
+import { Check, AlertCircle } from "lucide-react";
 
 const TOPIC_LABELS: Record<string, string> = {
   COLLECTIVE_DEV: "Collective Development & Tech",
@@ -121,19 +121,6 @@ export default function Contact() {
 
           {/* Core Info details mapping from template */}
           <div className="space-y-6 pt-8 border-t border-[#142B23] max-w-xs">
-            <div>
-              <span className="block font-mono text-[9px] text-[#7E9F94] uppercase tracking-wider mb-1">
-                Contact_Email
-              </span>
-              <a
-                href="mailto:yassar.minhaj@gmail.com"
-                className="font-mono text-xs text-[#ECFDF5] hover:text-[#10B981] transition-colors flex items-center gap-2"
-              >
-                <Mail className="w-4 h-4 text-[#10B981]" />
-                <span>yassar.minhaj@gmail.com</span>
-              </a>
-            </div>
-
             <div>
               <span className="block font-mono text-[9px] text-[#7E9F94] uppercase tracking-wider mb-1">
                 Base_Of_Operations

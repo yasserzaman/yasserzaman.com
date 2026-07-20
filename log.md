@@ -4,6 +4,20 @@ Revision log for yasserzaman.com. Newest entries on top. Format loosely follows 
 
 ---
 
+## 2026-07-20 — Remove direct email display + Journey narrative card
+
+### Removed
+- `Contact.tsx`: dropped the "Contact_Email" block (mailto link + address) from the Reach Out section — the contact form plus WhatsApp/LinkedIn/GitHub links already cover outreach, and a chatbot is being added separately (see note below). Removed the now-unused `Mail` icon import too.
+- `Journey.tsx`: dropped the "Context Narrative Card" under the slideshow (the "[ EXECUTIVE REFLECTION ]" / "[ ARCHIVAL ORIGINS ]" caption block) per Yasser's request to tidy up the section.
+
+### Verified
+- `tsc --noEmit` clean on both files (confirmed via targeted diff review — each edit is a single, isolated removal with no other changes).
+- Full `vite build` could not be confirmed this session — the sandbox's build kept hanging at the transform step, most likely due to file-system contention with a concurrent process (see note below). Relying on `tsc` + manual diff review for this change; recommend a normal local `npm run build` to double-check before pushing.
+
+### Note: concurrent work detected in the working tree
+While making this change, `git status` surfaced a parallel, uncommitted feature build already in progress in this same project folder — not made by this session: a full chatbot widget (`ChatWidget.tsx`, `src/lib/assistant.ts`, `assistantPersona.ts`, `gemini.ts`, `groq.ts`, `lead.ts`), a real `/api/contact` Vercel serverless function (Nodemailer + Zoho SMTP, replacing the Formspree approach committed earlier today), changes to `vite.config.ts`, `Navigation.tsx`, `package.json`, and a `tests/` folder. This looks like another tool/agent session actively building the chatbot mentioned in Yasser's request. Left entirely untouched — only `Contact.tsx`, `Journey.tsx`, and this log were staged and committed here.
+
+---
 ## 2026-07-15 — Copy fix: Agentic Sales Report token-cost claim
 
 ### Fixed
