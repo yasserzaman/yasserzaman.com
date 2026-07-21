@@ -4,6 +4,18 @@ Revision log for yasserzaman.com. Newest entries on top. Format loosely follows 
 
 ---
 
+## 2026-07-21 — Removed the photo from the Mission section
+
+### Changed
+- Pulled the portrait entirely out of the Mission section, per feedback that the color-graded/blurred office photo (see prior entry) still didn't look right. `MissionVision.tsx` is now text-only: the Mission and Vision copy is unchanged, just re-laid-out as a single `max-w-3xl` column instead of the old image + text split.
+- Removed the now-unused `officePortraitUrl` prop from `MissionVision` (component takes no props at all now), and cleaned up `App.tsx` accordingly: dropped the `officePortrait` import, the `office` key in `DEFAULT_LINKS`, and the prop passed into `<MissionVision />`.
+- Left `yasser_office_portrait.jpg` and `yasser_thobe_portrait.jpg` in `src/assets/images/` unused rather than deleting them, in case either photo is wanted again later.
+
+### Verified
+- `tsc --noEmit`: no errors on either changed file (same two pre-existing, unrelated `api/audit.ts`/`api/log.ts` errors as before).
+
+---
+
 ## 2026-07-21 — Swap Mission section portrait for a treated office photo
 
 ### Changed

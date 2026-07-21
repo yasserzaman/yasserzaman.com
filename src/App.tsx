@@ -12,13 +12,11 @@ import ChatWidget from "./components/ChatWidget";
 
 // Import compiled high-end editorial local assets
 import heroPortrait from "./assets/images/yasser_hero_portrait.jpg";
-import officePortrait from "./assets/images/yasser_office_portrait.jpg";
 import journeyPortrait from "./assets/images/yasser_journey_portrait.jpg";
 import ceoPortrait from "./assets/images/the_ceoShot.jpg";
 
 const DEFAULT_LINKS = {
   hero: heroPortrait,
-  office: officePortrait,
   journey: journeyPortrait,
   ceo: ceoPortrait
 };
@@ -95,8 +93,8 @@ export default function App() {
             {/* NEW OFFERINGS SECTION - CONSULTATION & PARTNERSHIPS */}
             <Offerings />
 
-            {/* CORE TRUST - ASYMMETRICAL MISSION & VISION split layout with executive office portrait */}
-            <MissionVision officePortraitUrl={images.office} />
+            {/* CORE TRUST - MISSION & VISION, text-only (no portrait) */}
+            <MissionVision />
 
             {/* INCEPTION & TRAJECTORY - PERSISTENT JOURNEY GRID WITH PARK PORTRAIT & CEO SHOT */}
             <Journey journeyPortraitUrl={images.journey} ceoPortraitUrl={images.ceo} />
