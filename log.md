@@ -4,6 +4,21 @@ Revision log for yasserzaman.com. Newest entries on top. Format loosely follows 
 
 ---
 
+## 2026-07-21 — Swap Mission section portrait for a treated office photo
+
+### Changed
+- Replaced the thobe portrait in the Mission section with a new photo Yasser provided (an office desk shot), after color grading it to fit the site: cropped to the section's portrait frame, cooled the tone and added contrast/vignette to match the other portraits, and softly blurred the cluttered desk/monitor in the background — traced the blur boundary along the actual shoulder/arm outline instead of a straight line so nothing of him got caught in it. Pose, face, and suit are untouched.
+- Renamed `thobePortraitUrl` -> `officePortraitUrl` end to end (`App.tsx`, `MissionVision.tsx`) and updated the section's captions/alt text that referenced "thobe" so they match the new photo (e.g. `YASSER // ARAB_THOBE` -> `YASSER // EXECUTIVE_STUDY`).
+- New asset: `src/assets/images/yasser_office_portrait.jpg` (118KB). Left the original `yasser_thobe_portrait.jpg` file in place, just unused, in case it's wanted again later.
+
+### Verified
+- `tsc --noEmit`: no errors on either changed file (two pre-existing errors from the in-progress chatbot/KV work elsewhere in the tree - `api/audit.ts` / `api/log.ts` missing `@vercel/node`/`@vercel/kv` types - are unrelated to this change).
+- Full `vite build` still not completing in this sandbox (hangs mid-transform every attempt today); relied on `tsc` plus careful review of the diff (both files' full diffs are exactly this change, nothing else mixed in).
+
+### Note on deploys
+Checked in this session: local `main` and `origin/main` are fully in sync as of commit `151f2b5` - something already pushed everything through the chatbot/cosmetic-enhancements commit. This commit (the photo swap) is local-only until pushed; ask before pushing, since a push here appears to trigger a live Vercel deploy.
+
+---
 ## 2026-07-20 — Custom contact-form dropdown (no more native blue highlight)
 
 ### Fixed

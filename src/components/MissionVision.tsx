@@ -6,10 +6,10 @@ import { HelpCircle } from "lucide-react";
 gsap.registerPlugin(ScrollTrigger);
 
 interface MissionVisionProps {
-  thobePortraitUrl?: string;
+  officePortraitUrl?: string;
 }
 
-export default function MissionVision({ thobePortraitUrl }: MissionVisionProps) {
+export default function MissionVision({ officePortraitUrl }: MissionVisionProps) {
   const [imageError, setImageError] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   
@@ -19,7 +19,7 @@ export default function MissionVision({ thobePortraitUrl }: MissionVisionProps) 
   const textRef1 = useRef<HTMLDivElement>(null);
   const textRef2 = useRef<HTMLDivElement>(null);
 
-  const activeThobePortraitUrl = thobePortraitUrl || "";
+  const activeOfficePortraitUrl = officePortraitUrl || "";
 
   useEffect(() => {
     // GSAP scroll anim triggered specifically on container mount
@@ -146,7 +146,7 @@ export default function MissionVision({ thobePortraitUrl }: MissionVisionProps) 
           </div>
         </div>
 
-        {/* Right Column (Narrower card split mapping) - Yasser Thobe Portrait */}
+        {/* Right Column (Narrower card split mapping) - Yasser executive office portrait */}
         <div className="lg:col-span-5 flex items-center justify-center">
           <div className="w-full max-w-sm flex flex-col space-y-4">
             
@@ -160,7 +160,7 @@ export default function MissionVision({ thobePortraitUrl }: MissionVisionProps) 
               </div>
               
               <div className="absolute bottom-2 left-2 font-mono text-[8px] text-[#10B981] z-10 uppercase">
-                YASSER // ARAB_THOBE
+                YASSER // EXECUTIVE_STUDY
               </div>
 
               {/* Absolute coordinates */}
@@ -177,7 +177,7 @@ export default function MissionVision({ thobePortraitUrl }: MissionVisionProps) 
                   <div className="space-y-1">
                     <p className="font-display text-2xl font-light text-white">Yasser Portrait</p>
                     <p className="font-mono text-[8px] uppercase tracking-widest text-[#10B981]">
-                      Thobe Portrait Specimen
+                      Executive Portrait Specimen
                     </p>
                   </div>
                   
@@ -187,15 +187,15 @@ export default function MissionVision({ thobePortraitUrl }: MissionVisionProps) 
                  {!imageError ? (
                    <img
                     ref={imageRef}
-                    src={activeThobePortraitUrl}
-                    alt="Mohammed Yasser Zaman Thobe Portrait"
+                    src={activeOfficePortraitUrl}
+                    alt="Mohammed Yasser Zaman at his desk"
                     referrerPolicy="no-referrer"
                     className={`w-full h-full object-cover scale-100 relative z-10 hover:scale-[1.03] transition-all duration-1000 ${
                       imageLoaded ? "opacity-100" : "opacity-0"
                     }`}
                     onLoad={() => setImageLoaded(true)}
                     onError={(e) => {
-                      console.info("Thobe Portrait load failed. Displaying minimalist pipeline fallback.");
+                      console.info("Office Portrait load failed. Displaying minimalist pipeline fallback.");
                       setImageError(true);
                     }}
                   />
@@ -218,7 +218,7 @@ export default function MissionVision({ thobePortraitUrl }: MissionVisionProps) 
 
             {/* Captions demonstrating architectural honesty */}
             <div className="flex justify-between items-start pt-2 px-2 font-mono text-[10px] tracking-wider text-[#7E9F94] uppercase">
-              <span>FIG_02: THOBE_CHRONOGRAPH</span>
+              <span>FIG_02: EXECUTIVE_STUDY</span>
               <span className="text-right text-[#10B981]">DURABLE VALUES SEED</span>
             </div>
           </div>
