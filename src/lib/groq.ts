@@ -9,6 +9,7 @@
 // bundle: use a dedicated free key and rotate it if abused.
 
 import { SYSTEM_PROMPT } from "./assistantPersona";
+import { logChat, logChatError } from "./logger";
 
 export interface ChatMessage {
   role: "user" | "assistant";
@@ -58,32 +59,63 @@ export function classifyGroqError(status: number): string {
 export async function chatWithGroq(messages: ChatMessage[]): Promise<string> {
   if (!API_KEY) throw new Error("not_configured");
 
-  const resp = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${API_KEY}`,
-    },
-    body: JSON.stringify({
+  const userMessage = messages[messages.length - 1]?.content || "";
+
+  try {
+    const resp = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        messages: toGroqMessages(messages),
+        temperature: 0.7,
+        max_tokens: 600,
+        top_p: 0.95,
+      }),
+    });
+
+    if (!resp.ok) {
+      const detail = await resp.text().catch(() => "");
+      const errCode = classifyGroqError(resp.status);
+      console.error("[assistant] Groq API error", resp.status, detail.slice(0, 300));
+
+      // Log the error.
+      await logChatError(userMessage, errCode, detail.slice(0, 300));
+
+      throw new Error(errCode);
+    }
+
+    const data = (await resp.json()) as {
+      choices?: { message?: { content?: string } }[];
+      usage?: { prompt_tokens?: number; completion_tokens?: number };
+    };
+
+    const text = data.choices?.[0]?.message?.content?.trim();
+    if (!text) {
+      await logChatError(userMessage, "empty_reply");
+      throw new Error("empty_reply");
+    }
+
+    // Log successful exchange.
+    await logChat({
+      timestamp: new Date().toISOString(),
+      userMessage,
+      assistantReply: text,
       model: MODEL,
-      messages: toGroqMessages(messages),
-      temperature: 0.7,
-      max_tokens: 600,
-      top_p: 0.95,
-    }),
-  });
+      tokens: {
+        prompt: data.usage?.prompt_tokens || 0,
+        completion: data.usage?.completion_tokens || 0,
+        total: (data.usage?.prompt_tokens || 0) + (data.usage?.completion_tokens || 0),
+      },
+    });
 
-  if (!resp.ok) {
-    const detail = await resp.text().catch(() => "");
-    console.error("[assistant] Groq API error", resp.status, detail.slice(0, 300));
-    throw new Error(classifyGroqError(resp.status));
+    return text;
+  } catch (err) {
+    const errCode = (err as any)?.message || "unknown_error";
+    await logChatError(userMessage, errCode, String(err));
+    throw err;
   }
-
-  const data = (await resp.json()) as {
-    choices?: { message?: { content?: string } }[];
-  };
-
-  const text = data.choices?.[0]?.message?.content?.trim();
-  if (!text) throw new Error("empty_reply");
-  return text;
 }
